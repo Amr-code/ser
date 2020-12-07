@@ -48,9 +48,11 @@
                                         <!--magdel shams-->
                                         <i class="fa fa-crosshairs tooltip" style="color: white; display: flex; font-size: 3px; position: absolute; border: none; margin-top: 16px; margin-right: 35px;" onclick="showDiv()"><span class="tooltiptext">magdel shams</span></i>
                                         <!--massada-->
-                                        <i class="fa fa-crosshairs tooltip" style="color: white; display: flex; font-size: 3px; position: absolute; border: none; margin-top: 22px; margin-right: 36px;" onclick="showDivb()"><span class="tooltiptext">massada</span></i>
-                                        <!--boqataa-->
                                         <i class="fa fa-crosshairs tooltip" style="color: white; display: flex; font-size: 3px; position: absolute; border: none; margin-top: 27px; margin-right: 33px;" onclick="showDivc()"><span class="tooltiptext">boqaata</span></i>
+                                        <!--boqataa-->
+                                        <i class="fa fa-crosshairs tooltip" style="color: white; display: flex; font-size: 3px; position: absolute; border: none; margin-top: 22px; margin-right: 36px;" onclick="showDivb()"><span class="tooltiptext">massada</span></i>
+                                        <!--akko-->
+                                        <i class="fa fa-crosshairs tooltip" style="color: white; display: flex; font-size: 8px; position: absolute; border: none; margin-top: 63px; margin-right: 127px;" onclick="showDive()"><span class="tooltiptext">akko</span></i>
                                         <img src="Map-of-Israel.jpg" style="height: 100%;" class="img-responsive" alt="Dicom">
                                     </div>
                                 </div>
@@ -113,7 +115,7 @@
     </div>
     <!--e-->
     <div id="chate" style="min-width: 1000px; height: 98%; margin: 5px; background: #0f3d0f; opacity:0.98; display: none;">
-        <div style=" min-width: 800px; max-height: 3%; margin: 5px; background: #222222; color: white; text-align: center;">Chat E</div>
+        <div style=" min-width: 800px; max-height: 3%; margin: 5px; background: #222222; color: white; text-align: center;">Akko</div>
         <div id="msgse" style=" min-width: 800px; max-height: 90%; margin: 5px; background: #0f3d0f; overflow-y: scroll;"></div>
         <input name="" id="msge" cols="30" rows="10" type="text" style="width: 700px; height: 30px; ">
         <input placeholder="User" id="usere" type="text" style="width:110px; height: 30px;  text-align: center;">
@@ -315,14 +317,14 @@
         document.getElementById('sende').addEventListener('click', function(e) {
             var ue = document.getElementById('usere');
             var msge = document.getElementById('msge');
-            firebase.database().ref('chat-E').push({
+            firebase.database().ref('Akko').push({
                 usere: ue.value,
                 txt: msge.value
             });
             msge.value = '';
         });
         var msgse = document.getElementById('msgse')
-        firebase.database().ref('chat-E').on('value', function(snapshot) {
+        firebase.database().ref('Akko').on('value', function(snapshot) {
             msgse.innerHTML = '';
             snapshot.forEach(function(e) {
                 var x = e.val();
