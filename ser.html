@@ -1,0 +1,460 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
+    <title>Ser</title>
+    <link rel="stylesheet" href="styleser.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://js.arcgis.com/3.8/js/esri/css/esri.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- <script src="jquery.js"></script> -->
+    <script type="text/javascript" async="" src="http://www.googletagmanager.com/gtag/js?id=G-FK43ZG2BJ5&amp;l=dataLayer&amp;cx=c"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.panzoom/3.2.2/jquery.panzoom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-mousewheel/1.0.5/mousewheel.js"></script>
+    <script src="https://www.googletagmanager.com/gtag/js?l=dataLayer" async=""></script>
+    <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase.js"></script>
+
+</head>
+
+<body style="direction: rtl; display: flex;">
+    <canvas style="position: fixed; width:100%; z-index: -100;" width="1000px" height="600px" id="matrixBackground"></canvas>
+
+
+    <div style="display: flex;">
+        <div class="container" style="height: 100%; width: 310.5px;">
+            <div id="page">
+                <div class="row">
+                    <div class="col">
+                        <div id="imgDiv">
+
+                            <div class="buttons">
+                                <div class=" zoom-out btn btn-default">
+                                    <button class="reset btn btn-primary">reset</button>
+                                </div>
+                                <button type="button" class=" zoom-in btn btn-default">
+                                    <span class="glyphicon glyphicon-plus fa fa-search-plus"></span>
+                                </button>
+                            </div>
+
+                            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                                <!-- Wrapper for slides -->
+                                <div class="carousel-inner" role="listbox">
+                                    <div class="item active panzoom">
+                                        <!--magdel shams-->
+                                        <i class="fa fa-crosshairs tooltip" style="color: white; display: flex; font-size: 3px; position: absolute; border: none; margin-top: 16px; margin-right: 35px;" onclick="showDiv()"><span class="tooltiptext">magdel shams</span></i>
+                                        <!--massada-->
+                                        <i class="fa fa-crosshairs tooltip" style="color: white; display: flex; font-size: 3px; position: absolute; border: none; margin-top: 22px; margin-right: 36px;" onclick="showDivb()"><span class="tooltiptext">massada</span></i>
+                                        <!--boqataa-->
+                                        <i class="fa fa-crosshairs tooltip" style="color: white; display: flex; font-size: 3px; position: absolute; border: none; margin-top: 27px; margin-right: 33px;" onclick="showDivc()"><span class="tooltiptext">boqaata</span></i>
+                                        <img src="Map-of-Israel.jpg" style="height: 100%;" class="img-responsive" alt="Dicom">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        (function() {
+            var $section = $('div').first();
+            $section.find('.panzoom').panzoom({
+                $zoomIn: $section.find(".zoom-in"),
+                $zoomOut: $section.find(".zoom-out"),
+                $zoomRange: $section.find(".zoom-range"),
+                $reset: $section.find(".reset")
+            });
+
+            $('#myCarousel').carousel({
+                pause: true,
+                interval: false
+            });
+
+        })();
+    </script>
+
+    <script>
+    </script>
+    <!--a-->
+    <div id="chata" style="min-width: 1000px; height: 98%; margin: 5px; background: #0f3d0f; opacity:0.98; display: none;">
+        <div style=" min-width: 800px; max-height: 3%; margin: 5px; background: #222222; color: white; text-align: center;">Magdal shams</div>
+        <div id="msgs" style=" min-width: 800px; max-height: 90%; margin: 5px; background: #0f3d0f; overflow-y: scroll;"></div>
+        <input name="" id="msg" cols="30" rows="10" type="text" style="width: 700px; height: 30px; ">
+        <input placeholder="User" id="user" type="text" style="width:110px; height: 30px;  text-align: center;">
+        <button type="submit" id="send" style="width:180px;  height: 30px; background:#222222; color: white; text-align: center; padding-top: 5px;">
+          send
+        </button>
+    </div>
+    <!--b-->
+    <div id="chatb" style="min-width: 1000px; height: 98%; margin: 5px; background: #0f3d0f; opacity:0.98; display: none;">
+        <div style=" min-width: 800px; max-height: 3%; margin: 5px; background: #222222; color: white; text-align: center;">boqaata</div>
+        <div id="msgsb" style=" min-width: 800px; max-height: 90%; margin: 5px; background: #0f3d0f; overflow-y: scroll;"></div>
+        <input name="" id="msgb" cols="30" rows="10" type="text" style="width: 700px; height: 30px; ">
+        <input placeholder="User" id="userb" type="text" style="width:110px; height: 30px;  text-align: center;">
+        <button type="submit" id="sendb" style="width:180px;  height: 30px; background:#222222; color: white; text-align: center; padding-top: 5px;">
+          send
+        </button>
+    </div>
+    <!--c-->
+    <div id="chatc" style="min-width: 1000px; height: 98%; margin: 5px; background: #0f3d0f; opacity:0.98; display: none;">
+        <div style=" min-width: 800px; max-height: 3%; margin: 5px; background: #222222; color: white; text-align: center;">Massada</div>
+        <div id="msgsc" style=" min-width: 800px; max-height: 90%; margin: 5px; background: #0f3d0f; overflow-y: scroll;"></div>
+        <input name="" id="msgc" cols="30" rows="10" type="text" style="width: 700px; height: 30px; ">
+        <input placeholder="User" id="userc" type="text" style="width:110px; height: 30px;  text-align: center;">
+        <button type="submit" id="sendc" style="width:180px;  height: 30px; background:#222222; color: white; text-align: center; padding-top: 5px;">
+          send
+        </button>
+    </div>
+    <!--e-->
+    <div id="chate" style="min-width: 1000px; height: 98%; margin: 5px; background: #0f3d0f; opacity:0.98; display: none;">
+        <div style=" min-width: 800px; max-height: 3%; margin: 5px; background: #222222; color: white; text-align: center;">Chat E</div>
+        <div id="msgse" style=" min-width: 800px; max-height: 90%; margin: 5px; background: #0f3d0f; overflow-y: scroll;"></div>
+        <input name="" id="msge" cols="30" rows="10" type="text" style="width: 700px; height: 30px; ">
+        <input placeholder="User" id="usere" type="text" style="width:110px; height: 30px;  text-align: center;">
+        <button type="submit" id="sende" style="width:180px;  height: 30px; background:#222222; color: white; text-align: center; padding-top: 5px;">
+          send
+        </button>
+    </div>
+    <!--j-->
+    <div id="chatj" style="min-width: 1000px; height: 98%; margin: 5px; background: #0f3d0f; opacity:0.98; display: none;">
+        <div style=" min-width: 800px; max-height: 3%; margin: 5px; background: #222222; color: white; text-align: center;">Chat J</div>
+        <div id="msgsj" style=" min-width: 800px; max-height: 90%; margin: 5px; background: #0f3d0f; overflow-y: scroll;"></div>
+        <input name="" id="msgj" cols="30" rows="10" type="text" style="width: 700px; height: 30px; ">
+        <input placeholder="User" id="userj" type="text" style="width:110px; height: 30px;  text-align: center;">
+        <button type="submit" id="sendj" style="width:180px;  height: 30px; background:#222222; color: white; text-align: center; padding-top: 5px;">
+          send
+        </button>
+    </div>
+    <!--d-->
+    <div id="chatd" style="min-width: 1000px; height: 98%; margin: 5px; background: #0f3d0f; opacity:0.98; display: none;">
+        <div style=" min-width: 800px; max-height: 3%; margin: 5px; background: #222222; color: white; text-align: center;">Chat D</div>
+        <div id="msgsd" style=" min-width: 800px; max-height: 90%; margin: 5px; background: #0f3d0f; overflow-y: scroll;"></div>
+        <input name="" id="msgd" cols="30" rows="10" type="text" style="width: 700px; height: 30px; ">
+        <input placeholder="User" id="userd" type="text" style="width:110px; height: 30px;  text-align: center;">
+        <button type="submit" id="sendd" style="width:180px;  height: 30px; background:#222222; color: white; text-align: center; padding-top: 5px;">
+              send
+            </button>
+    </div>
+    <!--f-->
+    <div id="chatf" style="min-width: 1000px; height: 98%; margin: 5px; background: #0f3d0f; opacity:0.98; display: none;">
+        <div style=" min-width: 800px; max-height: 3%; margin: 5px; background: #222222; color: white; text-align: center;">Chat F</div>
+        <div id="msgsf" style=" min-width: 800px; max-height: 90%; margin: 5px; background: #0f3d0f; overflow-y: scroll;"></div>
+        <input name="" id="msgf" cols="30" rows="10" type="text" style="width: 700px; height: 30px; ">
+        <input placeholder="User" id="userf" type="text" style="width:110px; height: 30px;  text-align: center;">
+        <button type="submit" id="sendf" style="width:180px;  height: 30px; background:#222222; color: white; text-align: center; padding-top: 5px;">
+          send
+        </button>
+    </div>
+    <!--g-->
+    <div id="chatg" style="min-width: 1000px; height: 98%; margin: 5px; background: #0f3d0f; opacity:0.98; display: none;">
+        <div style=" min-width: 800px; max-height: 3%; margin: 5px; background: #222222; color: white; text-align: center;">Chat G</div>
+        <div id="msgsg" style=" min-width: 800px; max-height: 90%; margin: 5px; background: #0f3d0f; overflow-y: scroll;"></div>
+        <input name="" id="msgg" cols="30" rows="10" type="text" style="width: 700px; height: 30px; ">
+        <input placeholder="User" id="userg" type="text" style="width:110px; height: 30px;  text-align: center;">
+        <button type="submit" id="sendg" style="width:180px;  height: 30px; background:#222222; color: white; text-align: center; padding-top: 5px;">
+          send
+        </button>
+    </div>
+    <!--h-->
+    <div id="chath" style="min-width: 1000px; height: 98%; margin: 5px; background: #0f3d0f; opacity:0.98; display: none;">
+        <div style=" min-width: 800px; max-height: 3%; margin: 5px; background: #222222; color: white; text-align: center;">Chat H</div>
+        <div id="msgsh" style=" min-width: 800px; max-height: 90%; margin: 5px; background: #0f3d0f; overflow-y: scroll;"></div>
+        <input name="" id="msgh" cols="30" rows="10" type="text" style="width: 700px; height: 30px; ">
+        <input placeholder="User" id="userh" type="text" style="width:110px; height: 30px;  text-align: center;">
+        <button type="submit" id="sendh" style="width:180px;  height: 30px; background:#222222; color: white; text-align: center; padding-top: 5px;">
+          send
+        </button>
+    </div>
+    <!--i-->
+    <div id="chati" style="min-width: 1000px; height: 98%; margin: 5px; background: #0f3d0f; opacity:0.98; display: none;">
+        <div style=" min-width: 800px; max-height: 3%; margin: 5px; background: #222222; color: white; text-align: center;">Chat I</div>
+        <div id="msgsi" style=" min-width: 800px; max-height: 90%; margin: 5px; background: #0f3d0f; overflow-y: scroll;"></div>
+        <input name="" id="msgi" cols="30" rows="10" type="text" style="width: 700px; height: 30px; ">
+        <input placeholder="User" id="useri" type="text" style="width:110px; height: 30px;  text-align: center;">
+        <button type="submit" id="sendi" style="width:180px;  height: 30px; background:#222222; color: white; text-align: center; padding-top: 5px;">
+              send
+            </button>
+    </div>
+    <div style=" height: 98%; margin: 5px; background: #0f3d0f; opacity:0.95; text-align: center;">
+        <div class="label">A3-5</div>
+        <div class="button-wrap">
+            <div class="cover-wrap">
+                <div class="hinge">
+                    <div class="bolt"></div>
+                    <div class="bolt"></div>
+                </div>
+                <div class="glass-wrap">
+                    <div class="glass"></div>
+                </div>
+            </div>
+            <div class="frame">
+                <div class="inner-frame">
+                    <div class="button"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="label" style="margin-top: 50px;"> A4-5</div>
+        <div class="button-wrap">
+            <div class="cover-wrap">
+                <div class="hinge">
+                    <div class="bolt"></div>
+                    <div class="bolt"></div>
+                </div>
+                <div class="glass-wrap">
+                    <div class="glass"></div>
+                </div>
+            </div>
+            <div class="frame">
+                <div class="inner-frame">
+                    <div class="button"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    </script>
+
+    <script src="script.js"></script>
+    <script src="matrixstylescrollingtype.js"></script>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase.js"></script>
+
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+
+    <script>
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        var firebaseConfig = {
+            apiKey: "AIzaSyB5NqT3HoCVqO4ibSv774q39OBTsmI3mTM",
+            authDomain: "ser3-bdc72.firebaseapp.com",
+            databaseURL: "https://ser3-bdc72.firebaseio.com",
+            projectId: "ser3-bdc72",
+            storageBucket: "ser3-bdc72.appspot.com",
+            messagingSenderId: "884990256370",
+            appId: "1:884990256370:web:3b5ff615256e3b02039c6b",
+            measurementId: "G-FK43ZG2BJ5"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+
+        document.getElementById('send').addEventListener('click', function(e) {
+            var u = document.getElementById('user');
+            var msg = document.getElementById('msg');
+            firebase.database().ref('Magdel shams').push({
+                user: u.value,
+                txt: msg.value
+            });
+            msg.value = '';
+        });
+        var msgs = document.getElementById('msgs')
+        firebase.database().ref('Magdel shams').on('value', function(snapshot) {
+            msgs.innerHTML = '';
+            snapshot.forEach(function(e) {
+                var x = e.val();
+                msgs.innerHTML += `
+    <p>${x.user}: ${x.txt}</p>
+    `
+            });
+        });
+
+
+        /*b*/
+        document.getElementById('sendb').addEventListener('click', function(e) {
+            var ub = document.getElementById('userb');
+            var msgb = document.getElementById('msgb');
+            firebase.database().ref('boqataa').push({
+                userb: ub.value,
+                txt: msgb.value
+            });
+            msgb.value = '';
+        });
+        var msgsb = document.getElementById('msgsb')
+        firebase.database().ref('boqataa').on('value', function(snapshot) {
+            msgsb.innerHTML = '';
+            snapshot.forEach(function(e) {
+                var x = e.val();
+                msgsb.innerHTML += `
+    <p>${x.user}: ${x.txt}</p>
+    `
+            });
+        });
+        /*c*/
+        document.getElementById('sendc').addEventListener('click', function(e) {
+            var uc = document.getElementById('userc');
+            var msgc = document.getElementById('msgc');
+            firebase.database().ref('masada').push({
+                userc: uc.value,
+                txt: msgc.value
+            });
+            msgc.value = '';
+        });
+        var msgsc = document.getElementById('msgsc')
+        firebase.database().ref('masada').on('value', function(snapshot) {
+            msgsc.innerHTML = '';
+            snapshot.forEach(function(e) {
+                var x = e.val();
+                msgsc.innerHTML += `
+    <p>${x.userc}: ${x.txt}</p>
+    `
+            });
+        });
+        /*e*/
+        document.getElementById('sende').addEventListener('click', function(e) {
+            var ue = document.getElementById('usere');
+            var msge = document.getElementById('msge');
+            firebase.database().ref('chat-E').push({
+                usere: ue.value,
+                txt: msge.value
+            });
+            msge.value = '';
+        });
+        var msgse = document.getElementById('msgse')
+        firebase.database().ref('chat-E').on('value', function(snapshot) {
+            msgse.innerHTML = '';
+            snapshot.forEach(function(e) {
+                var x = e.val();
+                msgse.innerHTML += `
+    <p>${x.usere}: ${x.txt}</p>
+    `
+            });
+        });
+
+        /*j*/
+        document.getElementById('sendj').addEventListener('click', function(e) {
+            var uj = document.getElementById('userj');
+            var msgj = document.getElementById('msgj');
+            firebase.database().ref('chat-J').push({
+                userj: uj.value,
+                txt: msgj.value
+            });
+            msgj.value = '';
+        });
+        var msgsj = document.getElementById('msgsj')
+        firebase.database().ref('chat-J').on('value', function(snapshot) {
+            msgsj.innerHTML = '';
+            snapshot.forEach(function(e) {
+                var x = e.val();
+                msgsj.innerHTML += `
+    <p>${x.userj}: ${x.txt}</p>
+    `
+            });
+        });
+        /*d*/
+        document.getElementById('sendd').addEventListener('click', function(e) {
+            var ud = document.getElementById('userd');
+            var msgd = document.getElementById('msgd');
+            firebase.database().ref('chat-D').push({
+                userd: ud.value,
+                txt: msgd.value
+            });
+            msgd.value = '';
+        });
+        var msgsd = document.getElementById('msgsd')
+        firebase.database().ref('chat-D').on('value', function(snapshot) {
+            msgsd.innerHTML = '';
+            snapshot.forEach(function(e) {
+                var x = e.val();
+                msgsd.innerHTML += `
+    <p>${x.userd}: ${x.txt}</p>
+    `
+            });
+        });
+        /*f*/
+        document.getElementById('sendf').addEventListener('click', function(e) {
+            var uf = document.getElementById('userf');
+            var msgf = document.getElementById('msgf');
+            firebase.database().ref('chat-F').push({
+                userf: uf.value,
+                txt: msgf.value
+            });
+            msgf.value = '';
+        });
+        var msgsf = document.getElementById('msgsf')
+        firebase.database().ref('chat-F').on('value', function(snapshot) {
+            msgsf.innerHTML = '';
+            snapshot.forEach(function(e) {
+                var x = e.val();
+                msgsf.innerHTML += `
+    <p>${x.userf}: ${x.txt}</p>
+    `
+            });
+        });
+        /*g*/
+        document.getElementById('sendg').addEventListener('click', function(e) {
+            var ug = document.getElementById('userg');
+            var msgg = document.getElementById('msgg');
+            firebase.database().ref('chat-G').push({
+                userg: ug.value,
+                txt: msgg.value
+            });
+            msgg.value = '';
+        });
+        var msgsg = document.getElementById('msgsg')
+        firebase.database().ref('chat-G').on('value', function(snapshot) {
+            msgsg.innerHTML = '';
+            snapshot.forEach(function(e) {
+                var x = e.val();
+                msgsg.innerHTML += `
+    <p>${x.userg}: ${x.txt}</p>
+    `
+            });
+        });
+        /*h*/
+        document.getElementById('sendh').addEventListener('click', function(e) {
+            var uh = document.getElementById('userh');
+            var msgh = document.getElementById('msgh');
+            firebase.database().ref('chat-H').push({
+                userh: uh.value,
+                txt: msgh.value
+            });
+            msgh.value = '';
+        });
+        var msgsh = document.getElementById('msgsh')
+        firebase.database().ref('chat-H').on('value', function(snapshot) {
+            msgsh.innerHTML = '';
+            snapshot.forEach(function(e) {
+                var x = e.val();
+                msgsh.innerHTML += `
+    <p>${x.userh}: ${x.txt}</p>
+    `
+            });
+        });
+        /*i*/
+        document.getElementById('sendi').addEventListener('click', function(e) {
+            var ui = document.getElementById('useri');
+            var msgi = document.getElementById('msgi');
+            firebase.database().ref('chat-I').push({
+                useri: ui.value,
+                txt: msgi.value
+            });
+            msgi.value = '';
+        });
+        var msgsi = document.getElementById('msgsi')
+        firebase.database().ref('chat-I').on('value', function(snapshot) {
+            msgsi.innerHTML = '';
+            snapshot.forEach(function(e) {
+                var x = e.val();
+                msgsi.innerHTML += `
+    <p>${x.useri}: ${x.txt}</p>
+    `
+            });
+        });
+    </script>
+
+    <script src="firebase.js"></script>
+    <script src="ser.js"></script>
+
+</body>
